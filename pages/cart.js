@@ -7,8 +7,6 @@ function cart() {
         const data = localStorage.getItem('my-cart')
         setMyCart(JSON.parse(data))
       },[])
-
-      console.log(myCart)
       
     return (
         <div className="container">
