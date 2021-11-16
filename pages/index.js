@@ -1,6 +1,7 @@
 import Head from 'next/head';
 import Link from 'next/link';
 import { useQuery,gql } from "@apollo/client";
+import { withApollo } from '../lib/apollo/apolloClient';
 
 
 const CategoryList = gql`{
@@ -20,7 +21,7 @@ const CategoryList = gql`{
 }`
 
 
-export default function Home() {
+const Home= () => {
   const response = useQuery(CategoryList);
   console.log(response);
   const {loading, error, data} = response;
@@ -65,3 +66,5 @@ export default function Home() {
     </div>
   )
 }
+
+export default withApollo({ ssr: true })(Home);

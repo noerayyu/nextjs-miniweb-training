@@ -2,6 +2,7 @@ import Head from 'next/head';
 import { useQuery,gql } from "@apollo/client";
 import { useRouter } from "next/router";
 import AddToCartBtn from '../../../comps/cart/AddToCartBtn';
+import { withApollo } from '../../../lib/apollo/apolloClient';
 
 const DetailProduct = gql`query getDetailProduct($url_key: String!){
     products(filter: { url_key: { eq: $url_key } }) {
@@ -81,4 +82,4 @@ function ProductDetail() {
     )
 }
 
-export default ProductDetail
+export default withApollo({ ssr: true })(ProductDetail);

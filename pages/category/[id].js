@@ -2,6 +2,7 @@ import Head from 'next/head';
 import Link from 'next/link';
 import { useQuery,gql } from "@apollo/client";
 import { useRouter } from "next/router";
+import { withApollo } from '../../lib/apollo/apolloClient';
 
 const CategoryProductList = gql`query getCategoryProduct($category_id: String!){
     products(filter: { category_id: { eq: $category_id } }) {
@@ -79,4 +80,4 @@ function CategoryProduct() {
     )
 }
 
-export default CategoryProduct
+export default withApollo({ ssr: true })(CategoryProduct);
