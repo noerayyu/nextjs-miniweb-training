@@ -6,7 +6,7 @@ class MyDocument extends Document {
     return (
       <Html lang="en">
         <Head>
-          <meta name="description" content="Maem is a website that display delicious meals" />
+          <meta name="description" content="Klambi is a marketplace" />
         </Head>
         <body>
           <Main />

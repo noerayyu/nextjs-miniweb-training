@@ -3,6 +3,9 @@ import '../styles/globals.css'
 
 import { useEffect } from "react";
 import Layout from '../comps/Layout'; //add layout comp to show navbar in all pages
+import { ApolloProvider } from "@apollo/client"; //add Apollo provider to parsing all apollo function to all components
+import client from "../apollo-client";
+import { AppProvider } from '../comps/context/AppContext';
 
 function MyApp({ Component, pageProps }) {
   
@@ -12,9 +15,13 @@ function MyApp({ Component, pageProps }) {
   }, []);
 
   return (
-    <Layout>
-      <Component {...pageProps} />
-    </Layout>
+    <AppProvider>
+    <ApolloProvider client={client}>
+      <Layout>
+        <Component {...pageProps} />
+      </Layout>
+    </ApolloProvider>
+    </AppProvider>
   )
 }
 
