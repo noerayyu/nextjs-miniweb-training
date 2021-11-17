@@ -1,8 +1,19 @@
 import Head from 'next/head';
 import Link from 'next/link';
 import { useQuery,gql } from "@apollo/client";
-import { withApollo } from '../lib/apollo/apolloClient';
+import { Container, Grid, Paper, makeStyles, Chip, Box, CircularProgress } from '@material-ui/core';
 
+import { withApollo } from '../lib/apollo/apolloClient';
+import CardCategory from '../comps/CardCategory';
+
+const useStyles =  makeStyles({
+  page:{
+    marginTop:'24px'
+  },
+  titleLabel:{
+    marginBottom:'24px'
+  }
+})
 
 const CategoryList = gql`{
     categoryList(filters:{}){
@@ -22,15 +33,15 @@ const CategoryList = gql`{
 
 
 const Home= () => {
+  const classes = useStyles();
   const response = useQuery(CategoryList);
-  console.log(response);
   const {loading, error, data} = response;
-  console.log(loading);
-  console.log(data);
 
   if (loading) {
-    return <div className="container text-center"><div className="spinner-border text-warning" role="status" /><span><a href="#loading" aria-hidden="true" className="aal_anchor" id="loading"></a> Loading...</span>
-    </div>
+    return <div className={classes.page}><Container><Box sx={{ display: 'flex', justifyContent: 'center'}}>
+    <CircularProgress />
+    </Box>
+  </Container></div>
   }
 
   if (error) {
@@ -39,32 +50,28 @@ const Home= () => {
   }
 
   const categories = data.categoryList
+
   return (
-    <div>
+    <div className={classes.page}>
+    <Container>
       <Head>
         <title>Klambi | Home</title>
       </Head>
-
-      <div className="container">
-        <span className="badge bg-warning text-dark p-2">All Categories</span>
-        <h2 className="mb-4">New Fashion</h2>
-        <div className="row">
-            {categories.map((category) => (
-              <div className="col-6"  key={category.id}>
-                <div className="card m-2" key={category.id}>
-                <div className="card-body">
-                  <h5 className="card-title">{category.name}</h5>
-                  <Link href={"/category/"+category.id}>
-                  <a className="btn btn-outline-dark">See More</a>
-                  </Link>
-                </div>
-                </div>
-              </div>
-            ))}
-        </div>
+      <div className={classes.titleLabel}>
+      <Chip label="All Categories" color="secondary" />
       </div>
+      <Grid container spacing={3}>
+        {categories.map((category) => (
+          <Grid item xs={6} md={3} key={category.id}>
+            <Paper>
+            <CardCategory category={category} />
+            </Paper>
+          </Grid>
+        ))}
+      </Grid>
+    </Container>
     </div>
   )
 }
 
-export default withApollo({ ssr: true })(Home);
+export default withApollo({ ssr: false })(Home);
