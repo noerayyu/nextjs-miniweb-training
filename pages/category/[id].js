@@ -63,10 +63,10 @@ function CategoryProduct() {
 
     return (
       <div className={classes.page}>
-      <Container>
         <Head>
           <title>Klambi | Category</title>
         </Head>
+      <Container>
         <div className={classes.titleLabel}>
         <Chip label="Product Category" color="secondary"/>
         </div>

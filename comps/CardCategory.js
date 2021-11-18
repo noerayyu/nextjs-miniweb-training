@@ -6,7 +6,7 @@ function CardCategory({category}) {
     return (
         <Card sx={{width:'320px', height:'150px'}}>
             <CardActionArea>
-            <Link href={"/category/"+category.id}>
+            <Link href="/[...slug]" as={`/${category.url_key}.html`}>
             <Box display="flex" sx={{justifyContent:'space-between'}}>
                 <CardContent>
                 <Typography component="div" variant="body2">

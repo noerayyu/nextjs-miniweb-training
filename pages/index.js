@@ -6,11 +6,9 @@ import { Container, Grid, Paper, makeStyles, Chip, Box, CircularProgress } from 
 import { withApollo } from '../lib/apollo/apolloClient';
 import CardCategory from '../comps/CardCategory';
 
-const useStyles =  makeStyles({
-  page:{
-    marginTop:'24px'
-  },
+const useStyles = makeStyles({
   titleLabel:{
+    marginTop:'24px',
     marginBottom:'24px'
   }
 })
@@ -38,7 +36,7 @@ const Home= () => {
   const {loading, error, data} = response;
 
   if (loading) {
-    return <div className={classes.page}><Container><Box sx={{ display: 'flex', justifyContent: 'center'}}>
+    return <div className={classes.titleLabel}><Container><Box sx={{ display: 'flex', justifyContent: 'center'}}>
     <CircularProgress />
     </Box>
   </Container></div>
@@ -52,7 +50,6 @@ const Home= () => {
   const categories = data.categoryList
 
   return (
-    <div className={classes.page}>
     <Container>
       <Head>
         <title>Klambi | Home</title>
@@ -70,7 +67,6 @@ const Home= () => {
         ))}
       </Grid>
     </Container>
-    </div>
   )
 }
 
