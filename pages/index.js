@@ -14,7 +14,7 @@ const useStyles = makeStyles({
 })
 
 const CategoryList = gql`{
-    categoryList(filters:{}){
+    categoryList{
       id
       image
       name
@@ -25,6 +25,7 @@ const CategoryList = gql`{
         name
         url_key
         url_path
+        image
       }
     }
 }`
@@ -47,7 +48,7 @@ const Home= () => {
     return <h2>Error...</h2>;
   }
 
-  const categories = data.categoryList
+  const categories = data.categoryList[0]
 
   return (
     <Container>
@@ -58,7 +59,7 @@ const Home= () => {
       <Chip label="All Categories" color="secondary" />
       </div>
       <Grid container spacing={3}>
-        {categories.map((category) => (
+        {categories.children.map((category) => (
           <Grid item xs={6} md={3} key={category.id}>
             <Paper>
             <CardCategory category={category} />

@@ -3,6 +3,7 @@ import { useQuery,gql } from "@apollo/client";
 
 import Category from '../comps/category';
 import { withApollo } from '../lib/apollo/apolloClient';
+import ProductDetail from '../comps/product';
 
 const UrlResolver = gql`query getUrlResolver($url: String!){
     urlResolver(url: $url){
@@ -15,15 +16,15 @@ const UrlResolver = gql`query getUrlResolver($url: String!){
     }
 }`
 
-const getPage = (resolver) => {
+const getPage = (resolver, NewSlug) => {
     if (!resolver) {
       return <div>Page not found</div>;
     } else if (resolver.type === "CATEGORY") {
-      return <Category />;
+      return <Category props={NewSlug} />;
     } 
-    // else if (resolver.type === "PRODUCT") {
-    //   return <Product url_key={slug[0]} />;
-    // }
+    else if (resolver.type === "PRODUCT") {
+      return <ProductDetail props={NewSlug} />;
+    }
     return <span />;
   };
 
@@ -61,7 +62,7 @@ function DynamicPage({slug}) {
 
     return (
         <div>
-            {getPage(resolver)}
+            {getPage(resolver, NewSlug)}
         </div>
     )
 }
