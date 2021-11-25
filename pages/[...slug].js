@@ -28,11 +28,12 @@ const getPage = (resolver, NewSlug) => {
     return <span />;
   };
 
-function DynamicPage({slug}) {
+function DynamicPage({props}) {
     // const { query } = slug;
+    console.log(props)
     let url = ''
     let NewSlug = [];
-    slug.slug.map((value) => {
+    props.slug.map((value) => {
         value = value.replace(".html", "");
         NewSlug.push(value);//masukin value kedalam array slugnya
         url += `/${value}`;
@@ -67,13 +68,21 @@ function DynamicPage({slug}) {
     )
 }
 
-export const getServerSideProps = async (context) => {
-    console.log(context)
+// export const getServerSideProps = async (context) => {
+//     console.log(context)
+//     const url = context.query
+  
+//     return {
+//       props:{ slug: url }
+//     }
+//   }
+
+  DynamicPage.getInitialProps  = async (context) => {
     const url = context.query
   
     return {
-      props:{ slug: url }
+      props:url
     }
   }
 
-  export default withApollo({ ssr: false })(DynamicPage);
+  export default withApollo({ ssr: true })(DynamicPage);

@@ -1,8 +1,9 @@
 import React from 'react'
+import Head from 'next/head';
 import { useQuery,gql } from "@apollo/client";
 import Link from 'next/link';
 import { withApollo } from '../../lib/apollo/apolloClient';
-import { Container, Grid, Card, CardMedia,CardActionArea,Typography, CardContent, CircularProgress, Box} from '@material-ui/core';
+import { makeStyles,Container, Grid, Card, CardMedia, Typography, CardContent, CircularProgress, Box, Chip} from '@material-ui/core';
 
 const CategoryProductList = gql`query getCategoryProduct($url_key: String!){
   categoryList(filters:{
@@ -33,8 +34,16 @@ const CategoryProductList = gql`query getCategoryProduct($url_key: String!){
   }
 }`
 
+const useStyles = makeStyles({
+  titleLabel:{
+    marginTop:'24px',
+    marginBottom:'24px'
+  }
+})
+
 function Category(props) {
-  const url = props.props[0]
+  const url = props.props[0];
+  const classes = useStyles();
   
   if (url) {
     const response = useQuery(CategoryProductList,{
@@ -63,7 +72,14 @@ function Category(props) {
     
     return (
         <Container>
-            <h2>Choose your style</h2>
+          <Head>
+            <title>Klambi | {url}</title>
+          </Head>
+          <div className={classes.titleLabel}>
+            <Chip label={'category '+ url} color="secondary" />
+          </div>
+          <h2>Choose your style</h2>
+           
           <Grid container spacing={3}>
             {products.map((product) => (
               <Grid item xs={6} md={3} key={product.id}>

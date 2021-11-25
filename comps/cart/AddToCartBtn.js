@@ -24,7 +24,7 @@ const AddToCartBtn = (props) => {
 
     return (
         <div>
-            <button onClick={handleClick} className="btn btn-outline-dark w-100">Buy This</button>
+            <a onClick={handleClick} style={{textDecoration:'none', color:'#fff', background:'#557571', display: 'block', textAlign:'center', padding:'10px 20px', marginTop:'12px'}}>ADD TO CART</a>
         </div>
     )
 }

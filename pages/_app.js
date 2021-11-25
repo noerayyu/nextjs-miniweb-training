@@ -6,7 +6,6 @@ import Layout from '../comps/Layout'; //add layout comp to show navbar in all pa
 import { AppProvider } from '../comps/context/AppContext';
 import theme from '../src/theme';
 
-
 function MyApp({ Component, pageProps }) {
   
   // to handle event (window and document) on bootstrap only render in client side 

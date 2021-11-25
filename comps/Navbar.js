@@ -14,11 +14,18 @@ function Navbar() {
       <AppBar position="static">
         <Toolbar>
 		<Box display='flex' flexGrow={1}>
+		<Link href="/">
+			<a style={{textDecoration:'none', color:'#fff'}}>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             Klambi
           </Typography>
+		  </a></Link>
 		</Box>
-          <Button color="inherit" edge="end">My Cart</Button>
+		<Link href="/cart">
+			<a style={{textDecoration:'none', color:'#fff'}}>
+          		<Button color="inherit" edge="end">My Cart</Button>
+		  	</a>
+		</Link>
         </Toolbar>
       </AppBar>
     </Box>

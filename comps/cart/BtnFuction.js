@@ -1,6 +1,6 @@
 export const addNewProduct = ( product ) => {
 
-	let productPrice = product.special_price;
+	let productPrice = product.price_range.maximum_price.regular_price.value;
 
 	let newCart = {
 		products: [],
@@ -72,7 +72,7 @@ export const getUpdatedProducts = ( existingCart, product, qtyToBeAdded, newQty 
 	} else {
 
 		// If product not found push the new product to the existing product array.
-		let productPrice = product.special_price;
+		let productPrice = product.price_range.maximum_price.regular_price.value;
 		const newProduct = createNewProduct( product, productPrice, qtyToBeAdded );
 		existingCart.push( newProduct );
 

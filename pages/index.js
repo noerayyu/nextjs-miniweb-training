@@ -30,11 +30,28 @@ const CategoryList = gql`{
     }
 }`
 
+// const CategoryList = gql`{
+//   categoryList(filters:{}){
+//     id
+//     image
+//     name
+//     url_key
+//     url_path
+//     children{
+//       id
+//       name
+//       url_key
+//       url_path
+//     }
+//   }
+// }`
+
 
 const Home= () => {
   const classes = useStyles();
   const response = useQuery(CategoryList);
   const {loading, error, data} = response;
+  console.log(data)
 
   if (loading) {
     return <div className={classes.titleLabel}><Container><Box sx={{ display: 'flex', justifyContent: 'center'}}>
@@ -49,6 +66,7 @@ const Home= () => {
   }
 
   const categories = data.categoryList[0]
+  // const categories = data.categoryList
 
   return (
     <Container>
@@ -66,9 +84,16 @@ const Home= () => {
             </Paper>
           </Grid>
         ))}
+         {/* {categories.map((category) => (
+          <Grid item xs={6} md={3} key={category.id}>
+            <Paper>
+            <CardCategory category={category} />
+            </Paper>
+          </Grid>
+        ))} */}
       </Grid>
     </Container>
   )
 }
 
-export default withApollo({ ssr: false })(Home);
+export default withApollo({ ssr: true })(Home);

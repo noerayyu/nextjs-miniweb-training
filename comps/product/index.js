@@ -1,5 +1,6 @@
 import React from 'react'
-import { Container, Box, CircularProgress } from '@material-ui/core'
+import Head from 'next/head';
+import { makeStyles, Chip, Container, Box, CircularProgress, Grid, Typography } from '@material-ui/core'
 import { useQuery,gql } from "@apollo/client";
 import { withApollo } from '../../lib/apollo/apolloClient';
 import AddToCartBtn from '../cart/AddToCartBtn';
@@ -11,7 +12,14 @@ const DetailProduct = gql`query getDetailProduct($url_key: String!){
           id
           name
           brand
-          special_price
+          price_range{
+            maximum_price{
+              regular_price{
+                currency
+                value
+              }
+            }
+          }
           description{
             html
           }
@@ -23,9 +31,16 @@ const DetailProduct = gql`query getDetailProduct($url_key: String!){
       }
 }`
 
+const useStyles = makeStyles({
+  titleLabel:{
+    marginTop:'24px',
+    marginBottom:'24px'
+  }
+})
+
 function ProductDetail(props) {
     const url = props.props[0]
-    
+    const classes = useStyles();
     
     if (url) {
         const response = useQuery(DetailProduct,{
@@ -54,15 +69,27 @@ function ProductDetail(props) {
 
     return (
         <Container>
-            <div className="row">
-            <div className="col-md-6 text-center">
-                <img src={product.image.url} width="30%"/>
-            </div>
-            <div className="col-md-6">
-            <p dangerouslySetInnerHTML={{__html:product.description.html}} />
-            <AddToCartBtn product={product}/>
-            </div>
-            </div>
+          <Head>
+            <title>Klambi | {url}</title>
+          </Head>
+
+          <div className={classes.titleLabel}>
+            <Chip label={url} color="secondary" />
+          </div>
+
+          <Grid container spacing={3}>
+            <Grid item xs={12} md={6}>
+              <img src={product.image.url} width="60%"/>
+            </Grid>
+            <Grid item xs={12} md={6}>
+              <h1>{product.name}</h1>
+              <Typography variant="h4" color="secondary">
+                IDR {product.price_range.maximum_price.regular_price.value}
+              </Typography>
+              <p dangerouslySetInnerHTML={{__html:product.description.html}} />
+              <AddToCartBtn product={product}/>
+            </Grid>
+          </Grid>
         </Container>
     )}
     return(
